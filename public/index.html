@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>CP Pluse</title>
+</head>
+<body>
+      <ion-header>
+        <ion-title>
+          <h2>Main</h2>
+        </ion-title>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <h2>Welcome to Main page</h2>
+        <form id="new_product" name="new_product">
+          <ion-item>
+            <ion-label position="floating">Make</ion-label>
+            <ion-input id="make" type="string"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Product</ion-label>
+            <ion-input id="product" type="string"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Model</ion-label>
+            <ion-input id="model" type="string"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Rate</ion-label>
+            <ion-input id="rate" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Remarks</ion-label>
+            <ion-textarea id="remark"></ion-textarea>
+          </ion-item>
+        </form>
+        <ion-button id="submit_btn">Submit</ion-button>
+      </ion-content>
+      <script>
+        const submitBtn = document.getElementById("submit_btn");
+        const makeInput = document.getElementById("make");
+        const productInput = document.getElementById("product");
+        const modelInput = document.getElementById("model");
+        const rateinput = document.getElementById("rate");
+        const remarkInput = document.getElementById("remark");
+        let times = Date.now();
+
+        const formPost = async () => {
+          const enteredMake = makeInput.value;
+          const enteredProduct = productInput.value;
+          const enteredModel = modelInput.value;
+          const enteredRate = rateinput.value;
+          const enteredRemark = remarkInput.value;
+          const data = {enteredMake, enteredProduct, enteredModel, enteredRate, enteredRemark, times};
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          };
+          const response = await fetch("/new-product",options);
+          const json = await response.json();
+          console.log(json);
+          document.getElementById("new_product").reset();
+        };
+        submitBtn.addEventListener("click",formPost);
+      </script>
+</body>
+</html>
